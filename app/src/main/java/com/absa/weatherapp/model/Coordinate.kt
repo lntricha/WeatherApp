@@ -5,11 +5,12 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class Coordinate(
+
     @SerializedName("lon")
-    val lon: Float? = null,
+    val longitude: Float? = null,
 
     @SerializedName("lat")
-    val lat: Float? = null
+    val latitude: Float? = null
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -18,8 +19,8 @@ data class Coordinate(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeValue(lon)
-        parcel.writeValue(lat)
+        parcel.writeValue(longitude)
+        parcel.writeValue(latitude)
     }
 
     override fun describeContents(): Int {

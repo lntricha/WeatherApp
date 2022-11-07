@@ -13,7 +13,7 @@ data class WeatherData<T>(
     val wind: Wind? = null,
 
     @SerializedName("main")
-    val temp: Temp? = null,
+    val temperature: Temperature? = null,
 
     @SerializedName("name")
     val name: String? = null,
@@ -22,13 +22,13 @@ data class WeatherData<T>(
     val id: Int? = null,
 
     @SerializedName("weather")
-    val weather: ArrayList<T>? = null
+    val weatherList: ArrayList<T>? = null
 ) : Parcelable {
     @SuppressLint("NewApi")
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(Coordinate::class.java.classLoader, Coordinate::class.java),
         parcel.readParcelable(Wind::class.java.classLoader, Wind::class.java),
-        parcel.readParcelable(Temp::class.java.classLoader, Temp::class.java),
+        parcel.readParcelable(Temperature::class.java.classLoader, Temperature::class.java),
         parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readArrayList(ArrayList::class.java.classLoader, ArrayList::class.java) as? ArrayList<T>
@@ -37,7 +37,7 @@ data class WeatherData<T>(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(coordinate, flags)
         parcel.writeParcelable(wind, flags)
-        parcel.writeParcelable(temp, flags)
+        parcel.writeParcelable(temperature, flags)
         parcel.writeString(name)
         parcel.writeValue(id)
     }

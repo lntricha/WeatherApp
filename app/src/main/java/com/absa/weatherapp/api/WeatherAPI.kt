@@ -1,6 +1,6 @@
 package com.absa.weatherapp.api
 
-interface API {
+interface WeatherAPI {
 
     suspend fun getWeatherData(
         lat: Float,
@@ -20,7 +20,7 @@ interface API {
 
     companion object {
         private const val BASEURL = "https://api.openweathermap.org/"
-        fun create(): API {
+        fun create(): WeatherAPI {
             return RetrofitAPI(baseUrl = BASEURL)
         }
     }

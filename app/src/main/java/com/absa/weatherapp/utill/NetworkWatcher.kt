@@ -1,4 +1,4 @@
-package com.absa.weatherapp
+package com.absa.weatherapp.utill
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -59,7 +59,6 @@ private constructor(application: Context) {
         }
     }
 
-    //    @ExperimentalCoroutinesApi
     @Suppress("DEPRECATION")
     private fun updateFields() {
 

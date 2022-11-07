@@ -9,10 +9,11 @@
         android:name=".WeatherApp"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:enableOnBackInvokedCallback="true"
         android:theme="@style/Theme.MyApplication">
 
         <activity
-            android:name=".WeatherDashboardActivity"
+            android:name=".ui.WeatherDashboardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

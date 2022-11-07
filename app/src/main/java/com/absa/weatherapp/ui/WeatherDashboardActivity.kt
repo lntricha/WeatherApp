@@ -1,7 +1,6 @@
-package com.absa.weatherapp
+package com.absa.weatherapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -9,9 +8,12 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import com.absa.weatherapp.R
 import com.absa.weatherapp.model.LocationData
 import com.absa.weatherapp.model.Weather
 import com.absa.weatherapp.model.WeatherData
+import com.absa.weatherapp.utill.NetworkWatcher
+import com.absa.weatherapp.viewmodel.WeatherDataViewModel
 import kotlinx.android.synthetic.main.activity_weather_dashboard.*
 import kotlin.math.roundToInt
 
@@ -23,12 +25,12 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_dashboard)
 
-        peopleListViewModel.showProgress.observe(this) {
+        peopleListViewModel.showWeatherProgress.observe(this) {
             showProgress(it)
         }
 
         peopleListViewModel.failedMessage.observe(this) {
-            tvNoUpdate.visibility=View.VISIBLE
+            tvNoUpdate.visibility = View.VISIBLE
             groupView.visibility = View.GONE
             it?.let { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
         }
@@ -41,7 +43,7 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
             it?.let { showLocationData(it) }
         }
 
-        peopleListViewModel.icon.observe(this) {
+        peopleListViewModel.weatherIcon.observe(this) {
             it?.let { imgWeather.setImageBitmap(it) }
         }
     }
@@ -55,11 +57,9 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
 
     private fun showLocationData(locationData: LocationData) {
         locationData.run {
-            tvNoUpdate.visibility=View.GONE
+            tvNoUpdate.visibility = View.GONE
             groupView.visibility = View.VISIBLE
-            if (BuildConfig.DEBUG)
-                Log.d("newList", this.toString())
-            val location: StringBuilder = StringBuilder(name ?: "")
+            val location: StringBuilder = StringBuilder(place ?: "")
             state?.let { location.append(", $it") }
             country?.let { location.append(", $it") }
             tvCityCountry.text = location
@@ -69,8 +69,6 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
     private fun showData(weatherData: WeatherData<Weather>) {
         weatherData.run {
             groupView.visibility = View.VISIBLE
-            if (BuildConfig.DEBUG)
-                Log.d("newList", this.toString())
             setData(this)
 
         }
@@ -78,18 +76,24 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
 
     private fun setData(weatherData: WeatherData<Weather>) {
 
-        weatherData.temp?.run {
-            tvTempValue.text = temp?.roundToInt().toString()
+        weatherData.temperature?.run {
+            tvTempValue.text = temperature?.roundToInt().toString()
             tvTempFeels.text =
                 String.format(getString(R.string.temp_feel) + " " + feels_like?.roundToInt().toString() + getString(R.string.temp_unit))
             tvHumidity.text = String.format(getString(R.string.humidity) + " " + humidity.toString()) + getString(R.string.percent)
-            txtMinMaxTemp.text = String.format(temp_min?.roundToInt().toString() + " ~ " + temp_max?.roundToInt().toString() + getString(R.string.temp_unit))
+            txtMinMaxTemp.text = String.format(temperature_min?.roundToInt().toString() + " ~ " + temperature_max?.roundToInt().toString() + getString(R.string.temp_unit))
         }
         weatherData.wind?.run {
-            tvWind.text = String.format(getString(R.string.wind) + " " + speed?.roundToInt().toString())
+            windSpeed?.let {
+                var speed: Double
+                if (windSpeed > 0) {
+                    speed = convertMetersPerSecToMilesPerHour(windSpeed)
+                    tvWind.text = String.format(getString(R.string.wind) + " %.2f ".format(speed) + getString(R.string.milesperhour))
+                }
+            }
         }
-        weatherData.weather?.let {
-            tvWeatherDetail.text = it[0].description
+        weatherData.weatherList?.let {
+            tvWeatherDetail.text = it[0].weatherDescription
             if (NetworkWatcher.getInstance(applicationContext).isOnline)
                 peopleListViewModel.getWeatherIcon(it[0].icon)
         }
@@ -120,6 +124,10 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
 
     override fun onQueryTextChange(newText: String?): Boolean {
         return false
+    }
+
+    private fun convertMetersPerSecToMilesPerHour(metersPerSec: Float): Double {
+        return metersPerSec * 2.23694
     }
 }
 

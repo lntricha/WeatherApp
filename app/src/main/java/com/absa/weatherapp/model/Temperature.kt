@@ -4,18 +4,18 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-data class Temp(
+data class Temperature(
     @SerializedName("temp")
-    val temp: Float? = null,
+    val temperature: Float? = null,
 
     @SerializedName("feels_like")
     val feels_like: Float? = null,
 
     @SerializedName("temp_min")
-    val temp_min: Float? = null,
+    val temperature_min: Float? = null,
 
     @SerializedName("temp_max")
-    val temp_max: Float? = null,
+    val temperature_max: Float? = null,
 
     @SerializedName("humidity")
     val humidity: Int? = null,
@@ -29,10 +29,10 @@ data class Temp(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeValue(temp)
+        parcel.writeValue(temperature)
         parcel.writeValue(feels_like)
-        parcel.writeValue(temp_min)
-        parcel.writeValue(temp_max)
+        parcel.writeValue(temperature_min)
+        parcel.writeValue(temperature_max)
         parcel.writeValue(humidity)
     }
 
@@ -40,12 +40,12 @@ data class Temp(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Temp> {
-        override fun createFromParcel(parcel: Parcel): Temp {
-            return Temp(parcel)
+    companion object CREATOR : Parcelable.Creator<Temperature> {
+        override fun createFromParcel(parcel: Parcel): Temperature {
+            return Temperature(parcel)
         }
 
-        override fun newArray(size: Int): Array<Temp?> {
+        override fun newArray(size: Int): Array<Temperature?> {
             return arrayOfNulls(size)
         }
     }

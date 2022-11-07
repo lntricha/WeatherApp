@@ -14,4 +14,5 @@
     <string name="valid_location_error">Not a valid location</string>
     <string name="search">Search</string>
     <string name="no_update">No Data</string>
+    <string name="milesperhour">miles/hour</string>
 </resources>

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Wind(
     @SerializedName("speed")
-    val speed: Float? = null,
+    val windSpeed: Float? = null,
 
     @SerializedName("deg")
     val degrees: Int? = null,
@@ -17,7 +17,7 @@ data class Wind(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeValue(speed)
+        parcel.writeValue(windSpeed)
         parcel.writeValue(degrees)
     }
 

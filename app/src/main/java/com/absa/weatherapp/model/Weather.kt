@@ -12,7 +12,7 @@ data class Weather(
     val main: String? = null,
 
     @SerializedName("description")
-    val description: String? = null,
+    val weatherDescription: String? = null,
 
     @SerializedName("icon")
     val icon: String? = null,
@@ -27,7 +27,7 @@ data class Weather(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(id)
         parcel.writeString(main)
-        parcel.writeString(description)
+        parcel.writeString(weatherDescription)
         parcel.writeString(icon)
     }
 
