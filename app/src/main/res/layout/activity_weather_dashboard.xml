@@ -42,8 +42,8 @@
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="imgWeather,tvCityCountry,tvCurrently,tvHumidity,txtTemp,
-           tvTempFeels,tvTempValue,tvWeatherDetail,tvWind" />
+            app:constraint_referenced_ids="imgWeather,tvCityCountry,tvCurrently,tvHumidity,tvTemp,
+           tvTempFeels,tvTempValue,tvWeatherDetail,tvWind,tvMinMaxTemp" />
 
         <TextView
             android:id="@+id/tvCityCountry"
@@ -92,14 +92,14 @@
             android:layout_marginTop="@dimen/dp_20"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_60"
-            app:layout_constraintEnd_toStartOf="@+id/txtTemp"
+            app:layout_constraintEnd_toStartOf="@+id/tvTemp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvCurrently" />
 
         <TextView
-            android:id="@+id/txtTemp"
+            android:id="@+id/tvTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_20"
@@ -118,14 +118,14 @@
             android:layout_marginTop="@dimen/dp_10"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_15"
-            app:layout_constraintEnd_toStartOf="@+id/txtMinMaxTemp"
+            app:layout_constraintEnd_toStartOf="@+id/tvMinMaxTemp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTempValue" />
 
         <TextView
-            android:id="@+id/txtMinMaxTemp"
+            android:id="@+id/tvMinMaxTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_15"

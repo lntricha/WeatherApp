@@ -81,7 +81,7 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
             tvTempFeels.text =
                 String.format(getString(R.string.temp_feel) + " " + feels_like?.roundToInt().toString() + getString(R.string.temp_unit))
             tvHumidity.text = String.format(getString(R.string.humidity) + " " + humidity.toString()) + getString(R.string.percent)
-            txtMinMaxTemp.text = String.format(temperature_min?.roundToInt().toString() + " ~ " + temperature_max?.roundToInt().toString() + getString(R.string.temp_unit))
+            tvMinMaxTemp.text = String.format(temperature_min?.roundToInt().toString() + " ~ " + temperature_max?.roundToInt().toString() + getString(R.string.temp_unit))
         }
         weatherData.wind?.run {
             windSpeed?.let {
@@ -106,6 +106,7 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
         searchItem = menu!!.findItem(R.id.actionSearch)
 
         val searchView: SearchView = searchItem?.actionView as SearchView
+        searchView.queryHint = getString(R.string.hint_search)
         searchView.isSubmitButtonEnabled = true
         searchView.setOnQueryTextListener(this)
         return true
