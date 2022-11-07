@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.absa.weatherapp.R
-import com.absa.weatherapp.api.DataList
 import com.absa.weatherapp.api.FetchError
+import com.absa.weatherapp.api.ResponseData
 import com.absa.weatherapp.api.WeatherAPI
 import com.absa.weatherapp.model.LocationData
 import com.absa.weatherapp.model.Weather
@@ -51,25 +51,25 @@ class WeatherDataViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     private fun getWeatherData(
-        lat: Float,
-        lon: Float,
+        latitude: Float,
+        longitude: Float,
         apiKey: String
     ) {
         _showWeatherProgress.postValue(true)
         viewModelScope.launch {
             WeatherAPI.create().getWeatherData(
-                lat, lon, apiKey, getUnit(),
+                latitude, longitude, apiKey, getUnit(),
                 this@WeatherDataViewModel::success,
                 this@WeatherDataViewModel::failure
             )
         }
     }
 
-    fun getLocationFromAddress(searchString: String, apiKey: String) {
+    fun getLocationFromAddress(searchString: String) {
         _showWeatherProgress.postValue(true)
         viewModelScope.launch {
             WeatherAPI.create().getLocationFromAddress(
-                searchString, apiKey,
+                searchString, getApiKey(),
                 this@WeatherDataViewModel::success,
                 this@WeatherDataViewModel::failure
             )
@@ -90,17 +90,17 @@ class WeatherDataViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
-    private fun success(dataList: DataList, call: Int) {
+    private fun success(responseData: ResponseData, call: Int) {
         when (call) {
             ADDRESS_CALL -> {
-                val locationDataArray = dataList as ArrayList<LocationData>
+                val locationDataArray = responseData as ArrayList<LocationData>
                 if (locationDataArray.size > 0) {
                     getWeatherData(locationDataArray[0].latitude!!, locationDataArray[0].longitude!!, getApiKey())
                     _locationData.postValue(locationDataArray[0])
                 } else failure(getString(R.string.valid_location_error))
             }
             WEATHER_CALL -> {
-                _weatherData.postValue(dataList as WeatherData<Weather>)
+                _weatherData.postValue(responseData as WeatherData<Weather>)
                 _showWeatherProgress.postValue(false)
             }
         }

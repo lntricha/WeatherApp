@@ -3,18 +3,18 @@ package com.absa.weatherapp.api
 interface WeatherAPI {
 
     suspend fun getWeatherData(
-        lat: Float,
-        lon: Float,
+        latitude: Float,
+        longitude: Float,
         apiKey: String,
         units: String,
-        success: (DataList, Int) -> Unit,
+        success: (ResponseData, Int) -> Unit,
         failure: (FetchError) -> Unit
     )
 
     suspend fun getLocationFromAddress(
         searchString: String,
         apiKey: String,
-        success: (DataList, Int) -> Unit,
+        success: (ResponseData, Int) -> Unit,
         failure: (FetchError) -> Unit
     )
 
@@ -26,6 +26,6 @@ interface WeatherAPI {
     }
 }
 
-typealias DataList = Any
+typealias ResponseData = Any
 typealias FetchError = Any
 

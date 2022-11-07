@@ -39,22 +39,22 @@ class RetrofitAPI(baseUrl: String) : WeatherAPI {
     }
 
     override suspend fun getWeatherData(
-        lat: Float,
-        lon: Float,
+        latitude: Float,
+        longitude: Float,
         apiKey: String,
         units: String,
-        success: (DataList, Int) -> Unit,
+        success: (ResponseData, Int) -> Unit,
         failure: (FetchError) -> Unit
     ) {
-        retrofitAPI.getWeatherData(lat, lon, apiKey, units).enqueue(object : Callback<WeatherData<Weather>> {
+        retrofitAPI.getWeatherData(latitude, longitude, apiKey, units).enqueue(object : Callback<WeatherData<Weather>> {
             override fun onResponse(
                 call: Call<WeatherData<Weather>>,
                 response: Response<WeatherData<Weather>>
             ) {
                 if (response.isSuccessful && response.code() == successCode) {
-                    val dataList = response.body()
-                    dataList?.let {
-                        success(dataList, WEATHER_CALL)
+                    val responseData = response.body()
+                    responseData?.let {
+                        success(responseData, WEATHER_CALL)
                     }
                 } else failure(response.message())
             }
@@ -68,7 +68,7 @@ class RetrofitAPI(baseUrl: String) : WeatherAPI {
     override suspend fun getLocationFromAddress(
         searchString: String,
         apiKey: String,
-        success: (DataList, Int) -> Unit,
+        success: (ResponseData, Int) -> Unit,
         failure: (FetchError) -> Unit
     ) {
         retrofitAPI.getLocationFromAddress(searchString, apiKey).enqueue(object : Callback<ArrayList<LocationData>> {
@@ -77,9 +77,9 @@ class RetrofitAPI(baseUrl: String) : WeatherAPI {
                 response: Response<ArrayList<LocationData>>
             ) {
                 if (response.isSuccessful && response.code() == successCode) {
-                    val dataList = response.body()
-                    dataList?.let {
-                        success(dataList, ADDRESS_CALL)
+                    val responseData = response.body()
+                    responseData?.let {
+                        success(responseData, ADDRESS_CALL)
                     }
                 } else failure(response.message())
             }

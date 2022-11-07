@@ -12,8 +12,8 @@ interface WeatherWebAPI {
 
     @GET("data/2.5/weather/")
     fun getWeatherData(
-        @Query("lat") lat: Float,
-        @Query("lon") lon: Float,
+        @Query("lat") latitude: Float,
+        @Query("lon") longitude: Float,
         @Query("appid") apiKey: String,
         @Query("units") units: String
     ): Call<WeatherData<Weather>>

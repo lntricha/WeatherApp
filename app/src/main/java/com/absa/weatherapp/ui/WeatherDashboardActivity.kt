@@ -51,6 +51,7 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
     private fun showProgress(isShow: Boolean) {
         if (isShow) {
             progressBarFetchData.visibility = View.VISIBLE
+            tvNoUpdate.visibility=View.GONE
         } else
             progressBarFetchData.visibility = View.GONE
     }
@@ -115,7 +116,7 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (NetworkWatcher.getInstance(applicationContext).isOnline) {
             query?.run {
-                peopleListViewModel.getLocationFromAddress(this, "b6329cc033c7a23d4fc04d0429f182cc")
+                peopleListViewModel.getLocationFromAddress(this)
             }
             searchItem?.collapseActionView()
         } else
