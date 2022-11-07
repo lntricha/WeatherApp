@@ -28,6 +28,8 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
         }
 
         peopleListViewModel.failedMessage.observe(this) {
+            tvNoUpdate.visibility=View.VISIBLE
+            groupView.visibility = View.GONE
             it?.let { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
         }
 
@@ -53,6 +55,7 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
 
     private fun showLocationData(locationData: LocationData) {
         locationData.run {
+            tvNoUpdate.visibility=View.GONE
             groupView.visibility = View.VISIBLE
             if (BuildConfig.DEBUG)
                 Log.d("newList", this.toString())

@@ -13,4 +13,5 @@
     <string name="unit">metric</string>
     <string name="valid_location_error">Not a valid location</string>
     <string name="search">Search</string>
+    <string name="no_update">No Data</string>
 </resources>
