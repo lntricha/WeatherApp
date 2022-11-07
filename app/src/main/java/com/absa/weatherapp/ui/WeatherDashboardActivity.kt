@@ -51,7 +51,7 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
     private fun showProgress(isShow: Boolean) {
         if (isShow) {
             progressBarFetchData.visibility = View.VISIBLE
-            tvNoUpdate.visibility=View.GONE
+            tvNoUpdate.visibility = View.GONE
         } else
             progressBarFetchData.visibility = View.GONE
     }
@@ -86,7 +86,7 @@ class WeatherDashboardActivity : AppCompatActivity(), SearchView.OnQueryTextList
         }
         weatherData.wind?.run {
             windSpeed?.let {
-                var speed: Double
+                val speed: Double
                 if (windSpeed > 0) {
                     speed = convertMetersPerSecToMilesPerHour(windSpeed)
                     tvWind.text = String.format(getString(R.string.wind) + " %.2f ".format(speed) + getString(R.string.milesperhour))
