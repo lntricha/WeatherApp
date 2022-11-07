@@ -8,7 +8,6 @@ import android.net.NetworkRequest
 import android.os.Build
 import androidx.annotation.IntRange
 import androidx.annotation.RequiresPermission
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -111,23 +110,18 @@ private constructor(application: Context) {
         }
     }
 
-    @ExperimentalCoroutinesApi
     fun watchNetwork(): Flow<Boolean> = watchWifi()
         .combine(watchCellular()) { wifi, cellular -> wifi || cellular }
         .combine(watchEthernet()) { wifiAndCellular, ethernet -> wifiAndCellular || ethernet }
 
-    @ExperimentalCoroutinesApi
     private fun watchWifi(): Flow<Boolean> = callbackFlowForType(NetworkCapabilities.TRANSPORT_WIFI)
 
-    @ExperimentalCoroutinesApi
     private fun watchCellular(): Flow<Boolean> =
         callbackFlowForType(NetworkCapabilities.TRANSPORT_CELLULAR)
 
-    @ExperimentalCoroutinesApi
     private fun watchEthernet(): Flow<Boolean> =
         callbackFlowForType(NetworkCapabilities.TRANSPORT_ETHERNET)
 
-    @ExperimentalCoroutinesApi
     private fun callbackFlowForType(@IntRange(from = 0, to = 7) type: Int) = callbackFlow {
 
         trySend(false)
